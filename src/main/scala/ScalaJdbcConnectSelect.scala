@@ -3,21 +3,20 @@ import java.util.Formatter
 import java.sql.{Connection,DriverManager,PreparedStatement,
   ResultSet,SQLException,Statement}
 
-
 object ScalaJdbcConnectSelect extends App {
   // connect to the database named "mysql" on port 8889 of localhost
-  val url = "jdbc:mysql://213.159.31.172:3306/tomusene_naberaqq?useSSL=false&serverTimezone=Turkey"
-  val driver = "com.mysql.cj.jdbc.Driver"
-  val username = "tomusene_milid"
-  val password = "mlyt440300"
+  val url = "jdbc:mysql://localhost:3333/mysql?useSSL=false"
+  val driver = "com.mysql.jdbc.Driver"
+  val username = "root"
+  val password = "root"
   var connection:Connection = null
   try {
     Class.forName(driver)
     connection = DriverManager.getConnection(url, username,password)
     val statement = connection.createStatement
-    var str="use tomusene_naberaqq;"
+    var str="use naberaqq;"
     var rs = statement.executeQuery(str)
-    str =  "select * from message;"
+    str =  "select * from person;"
     rs = statement.executeQuery(str)
 
     while (rs.next) {

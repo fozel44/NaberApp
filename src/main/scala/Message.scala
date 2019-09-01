@@ -2,9 +2,6 @@ import java.sql.{CallableStatement, Connection, DriverManager, SQLException}
 
 class Message extends Person{
 
-
-
-
   def showMyAllChats(uid:Int): Unit = {
     val url = "jdbc:mysql://localhost:3333/mysql?useSSL=false&serverTimezone=Turkey"
     val driver = "com.mysql.cj.jdbc.Driver"
