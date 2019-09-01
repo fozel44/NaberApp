@@ -3,6 +3,7 @@ import java.util.Formatter
 import java.sql.{Connection,DriverManager,PreparedStatement,
   ResultSet,SQLException,Statement}
 
+
 object ScalaJdbcConnectSelect extends App {
   // connect to the database named "mysql" on port 8889 of localhost
   val url = "jdbc:mysql://78.142.210.52:3306/harbiyei_naberaqq?useSSL=false&serverTimezone=Turkey"
