@@ -5,18 +5,18 @@ import java.sql.{Connection,DriverManager,PreparedStatement,
 
 object ScalaJdbcConnectSelect extends App {
   // connect to the database named "mysql" on port 8889 of localhost
-  val url = "jdbc:mysql://localhost:3333/mysql?useSSL=false"
-  val driver = "com.mysql.jdbc.Driver"
-  val username = "root"
-  val password = "root"
+  val url = "jdbc:mysql://78.142.210.52:3306/harbiyei_naberaqq?useSSL=false&serverTimezone=Turkey"
+  val driver = "com.mysql.cj.jdbc.Driver"
+  val username = "harbiyei_milid"
+  val password = "mlyt440300"
   var connection:Connection = null
   try {
     Class.forName(driver)
     connection = DriverManager.getConnection(url, username,password)
     val statement = connection.createStatement
-    var str="use naberaqq;"
+    var str="use tomusene_naberaqq;"
     var rs = statement.executeQuery(str)
-    str =  "select * from person;"
+    //str =  "select * from message;"
     rs = statement.executeQuery(str)
 
     while (rs.next) {
