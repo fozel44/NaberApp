@@ -2,7 +2,7 @@ package MVC
 
 import java.sql.{CallableStatement, Connection, SQLException}
 
-/*dao-domain object*/
+ /*dao-domain object*/
 
 class PersonModel(personId:Int,name:String,phone:String,password:String) {
   def updatePerson(person:PersonModel, connection:Connection): Boolean = {
