@@ -6,7 +6,8 @@ import java.util.concurrent.TimeUnit
 
 
 
- /*dao-domain object*/
+
+/*dao-domain object*/
 
 class PersonModel(var name:String, var phone:String,var password:String) {
   var personId: Int = 0
