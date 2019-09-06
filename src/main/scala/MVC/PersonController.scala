@@ -4,7 +4,7 @@ class PersonController {
 
   def validatePerson(person:PersonModel):Boolean={
     /*regex*/
-    true
+      true
   }
   def updatePerson(person_id:Int, name:String, phone:String, password:String): Boolean = {
     val con = ConnectionManager.getConnection()
