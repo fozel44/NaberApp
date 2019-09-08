@@ -6,6 +6,7 @@ class PersonView {
 
   val personController = new PersonController
 
+
   def newPerson(): Int = {
     println("Adınızı Giriniz : ")
     val name = readLine()
