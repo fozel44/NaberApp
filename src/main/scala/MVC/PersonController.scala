@@ -13,6 +13,32 @@ class PersonController {
 
   }
 
+  def validateName(name:String): Boolean ={
+    val Pattern = new Regex("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$") // Name
+    val a = Pattern findAllIn(name)
+
+    if (a.isEmpty == true || name.length>30){
+      false // Name için => 30 karakterden uzun olmamak şartıyla kelimeler arasında 1 boşluk bırakarak name tanımlanabilir.
+      // Boş Bırakılamaz.
+    }else true
+
+  }
+
+  def validatePhone(phone:String): Boolean ={
+    val Pattern = "^[0-9]{11}$".r
+    val a = Pattern findAllIn(phone)
+    if(a.isEmpty==true || phone.length != 11) false
+    else true     // Phone için => Boş bırakılamaz başında 0 kullanılarak yazılır.
+  }
+
+  def validatePassword(password: String): Boolean ={
+    val Pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$".r
+    val a = Pattern findAllIn(password)
+    if(a.isEmpty==true || password.length<8 || password.length >10) false
+    else true
+  }
+
+
 
   def newPerson(name:String,phone:String,password:String): Int ={
     val con=ConnectionManager.getConnection()
@@ -42,37 +68,12 @@ class PersonController {
 
   } // MVC Hazır
 
-
-
-
-
-
-  def validateUpdatePerson(name:String,phone:String,password:String):Int={
-    var Pattern = new Regex("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$") // Name
-    var a = Pattern findAllIn(name)
-    if (a.isEmpty==true){
-      return 1
-    }
-
-    if()
-      (person) match {
-        case (name) => name.toLowerCase= [a-z]*
-        case  =>
-        case  =>
-        case  =>
-      }
-    true
-  }
-
-  def updatePerson(person_id:Int, name:String, phone:String, password:String): Boolean = {
+  def updatePerson(person_id:Int, name:String, phone:String, password:String): Int = {
     val con = ConnectionManager.getConnection()
     try {
       val person = new PersonModel(name, phone, password)
       person.personId = person.getPersonIdWherePhone(person,con)
-      if(validatePerson(name, phone, password))
-        person.updatePerson(person,con)
-      else
-        false
+      person.updatePerson(person,con)
     }
     finally{
       ConnectionManager.closeConnection(con)

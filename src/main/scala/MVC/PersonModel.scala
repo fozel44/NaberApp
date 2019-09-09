@@ -1,7 +1,7 @@
 package MVC
 
-import java.sql.{CallableStatement, Connection, DriverManager, PreparedStatement, SQLException}
-import java.util.concurrent.TimeUnit
+import java.sql.{CallableStatement, Connection, PreparedStatement, SQLException,SQLIntegrityConstraintViolationException}
+
 
 /*dao-domain object*/
 
@@ -97,7 +97,7 @@ class PersonModel(name:String,phone:String,password:String) {
 
 
 
-  def updatePerson(person:PersonModel, connection:Connection): Boolean = {
+  def updatePerson(person:PersonModel, connection:Connection): Int = {
     try{
       val statement = connection.createStatement
       var query="use naberaqq;"
@@ -109,11 +109,14 @@ class PersonModel(name:String,phone:String,password:String) {
       stmt.setString(3,person.password)
       stmt.setInt(4,person.personId)
       stmt.execute() // burada yazan kod stored procedure de preparecall yapmak için gerekli olan execute kod parçası
-      true
+      0
     }catch {
       case ex: SQLException =>
-        System.out.println("HATA")
-        false
+        System.out.println(ex.getMessage)
+        1 // Herhangi bir exception
+      case ex : SQLIntegrityConstraintViolationException  =>
+        System.out.println(ex.getMessage)
+        2 // Sistemde kayıtlı bir telefon numarasıyla update
     }
   }
 
