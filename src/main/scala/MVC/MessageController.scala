@@ -1,23 +1,64 @@
 package MVC
 
-class MessageController {
-  val msg     = new MessageModel(message_id = 0,sender_id = 0,receiver_id = 0,message = "",send_date = "")
-  val person  = new PersonModel()
+import java.sql.Timestamp
 
-  def validateShowMyAllChats(): Boolean ={
-    if(true){
-      return false
-    }
-    true
+import scala.util.matching.Regex
+
+class MessageController {
+
+
+  def whoseMessage(person: PersonModel,message:MessageModel): Boolean ={
+
+    if(message.getSenderId() == person.personId){
+        true
+    }else false
   }
 
-  def showMyAllChats(personId:Int): Boolean = {
+  def validateMessage(messageText:String):Boolean= {
+    val Pattern  = new Regex("^sil [0-9]+$")
+    val check = Pattern findAllIn(messageText)
+    if(check.isEmpty==true) false
+    else true
+  }
+
+  def validateIndex(index:Int,arrLength:Int): Boolean ={
+    if( index-1 > arrLength){
+      false
+    }else true
+  }
+
+
+  def deleteMessage(person:PersonModel,message: MessageModel): Boolean ={
     val con = ConnectionManager.getConnection()
-    try {
-      if (validateShowMyAllChats()) {
-        msg.showMyAllChats(personId)
-        true
-      } else false
+    try{
+
+        if (whoseMessage(person, message)){
+
+          message.deleteMessage(person, message, con)
+          true
+        }
+        else {
+          false
+        }
+
+    }finally {
+      ConnectionManager.closeConnection(con)
+    }
+
+  }
+
+
+  def getMessages(person: PersonModel,message: MessageModel,whoid:Int): Array[(MessageModel,String)] ={
+    val con = ConnectionManager.getConnection()
+    try{
+      val arr = message.getMessages(person,whoid,con)
+      var arrName:Array[String] = Array()
+      for(i <- 0 until arr.length){
+        arrName = arrName ++ Array(message.getNameWhereId(arr(i),con))
+      }
+      var a = arr.zip(arrName)
+
+      a
     }finally {
       ConnectionManager.closeConnection(con)
     }
